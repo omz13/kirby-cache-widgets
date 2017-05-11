@@ -1,0 +1,8 @@
+{
+"name": "version-widget",
+"description": "Panel dashboard widget displaying status of caches (OPCache and memcache/file/apc)",
+"author": "David Somers http://omz13.com",
+"license": "MIT",
+"version": "0.1",
+"type": "kirby-plugin"
+}
