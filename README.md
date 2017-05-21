@@ -39,9 +39,11 @@ $ git submodule add https://github.com/omz13/kirby-cache-widgets site/plugins/ve
 ```
 
 ## Usage
-You don't have anything to do once the widget is installed. These are informational widgets --- they do not do anything to your site --- they only report on the running status of the two cache systems. There are two widgets that are shown in the panel.
+You don't have anything to do once the widget is installed. These are informational widgets and they do not do anything to your site: they only report on the running status of the two cache sub-systems. There are two widgets that are shown in the panel.
 
-NOTE: It is assumed that you are using a sensible pairing of ```OPcache``` and ```memcached``` or ```file``` for the opcode and object caches respectively. Depending on your version of PHP, you could also use APC or (APUc and apcu-bc) and there is some limited support in these widgets for that scenario.
+NOTE: It is assumed that you are using a sensible pairing of ``OPcache`` for the opcode cache and ``memcached`` or ``file`` for the object cache.
+
+The support for ``APC`` driver is PHP-version dependant and on the provision and availability of specific modules: PHP 5.x supports ``APC`` if the ``APC`` module is available (the original combined opcode and object cache); PHP 7.0 does not support the ``APC`` driver because while it does support the ``APCu`` module (a replacement for ``APC`` sans opcode caching) the necessary ``apcu-bc``module (a compatibility layer) is not supported so the issue is moot; PHP 7.1 supports the ``APC`` driver if both the ``APCu`` and ``apcu-bc`` modules are available (but note that this only provides the object cache part of ``APC`` and the opcode cache should be provided by the ``OPcache`` module). Yes, this is all a bit messy, and the logic flow to code with this requires a seriously strong cup of coffee (of whatever drink stimulates your synapses) the message is clear: use PHP 7.1 and enjoy the benefit of its ``OPcache`` module for opcode caching and use the ``memcached`` driver (because this is 2017 and you should have the ``memcached`` module installed) or fallback to the ``file`` driver (and ideally use SSD-based storage).
 
 ### 1. _object cache_ widget
 
@@ -53,25 +55,25 @@ This will show information about the Kirby-configured cache (```c::set('cache.dr
 
 #### memcached-based object cache
 
-If the driver is ```memcached```, and the daemon is running, the _memcached_ widget will show applicable status information:
+If the driver is ``memcached``, and the daemon is running, the _memcached_ widget will show applicable status information:
 
-If the driver is ```memcached```, but the daemon is not running, or is running but has been disabled (```opcache.enable=0``` in its configuration file), the widget will show this.
+If the driver is ``memcached``, but the daemon is not running, or is running but has been disabled (``opcache.enable=0`` in its configuration file), the widget will show this.
 
 #### apc-based object cache
 
-If the driver is ```apc```, the widget will show that it has been configured and some basic operational information.
+If the driver is ``apc``, the widget will show that it has been configured and some basic operational information.
 
 NOTE: This widget tests for the presence of the APCu module, which provides some level of compatibility with APC. If you are using APC, you will also need APC_BU.
 
 #### file-based object cache
 
-If the driver is ```file```, the widget will show that it is active.
+If the driver is ``file``, the widget will show that it is active.
 
 ### 2. _opcode cache_ widget
 
-If the php environment has the ```opcache``` module loaded (and it really should be!), the _opcode cache_ widget will show some basic statistics.
+If the php environment has the ``opcache`` module loaded (and it really should be!), the _opcode cache_ widget will show some basic statistics.
 
-If ```opcache``` is not available, or is available but has been disabled it its configuration, you will get a message to that effect.
+If the ``opcache`` module is not available, or is available but has been disabled it its configuration (unlikely but possible), you will get a message to that effect.
 
 ## Options
 
@@ -100,13 +102,13 @@ If ```true```, all users who have Admin privilege can flush the caches.
 
 ### plugin.cachewidget.usercanflush
 
-If set, this can be either a single user, or an array or users, who can be allowed to flush the cache.
+If set, this can be either a single user, or an array or users, who can be allowed to flush the caches.
 
 ### plugin.cachewidget.verbose
 
 Default: ```false```
 
-If ```true```, the object cache widgets will show lots of information and in a very 'raw' manner.
+If ```true```, the cache widgets will show lots of information and in a very 'raw' manner.
 
 ### plugin.cachewidget.terse
 
