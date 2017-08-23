@@ -6,10 +6,13 @@ use c;
 use tpl;
 
 // is the cache enabled in the kirby config?
-if (!kirby()->options['cache']) {
+$potential_driver = c::get('cache.driver');
+$potential_enabled = c::get('cache');
+
+if (!c::get('cache.driver') && !c::get('cache')) {
     return array
     (
-        'title' => 'object cache',
+        'title' => 'object cache' . ($potential_driver ? ' (' . $potential_driver .')' : ''),
         'compressed' => true,
         'html' => function () {
             switch (panel()->user()->language()) {
@@ -30,18 +33,24 @@ if (!kirby()->options['cache']) {
     );
 }
 
+// get the active driver
 $driver = kirby()->options['cache.driver'];
 
-$title = 'object cache (' . $driver . ')';
+if ($driver != $potential_driver)
+    $title = 'object cache (' . $potential_driver . '*)';
+    // note the asterisk to indicate the specified driver has been switched off
+else
+    $title = 'object cache (' . $driver . ')';
 
 // for memcached and apc, check if the appropriate php driver is loaded.
 $has_php_extension = true;
-switch (c::get('cache.driver')) {
+switch ($potential_driver) {
     case 'memcached':
         $has_php_extension = extension_loaded('memcached');
         break;
     case 'apc':
         $has_php_extension = extension_loaded('apcu'); // apc needs apcu
+        // Why are you using apc?!
         break;
 }
 // and guard
@@ -77,7 +86,7 @@ return
         'compressed' => true,
         'options' => $options,
         'html' => function () {
-            switch (kirby()->options['cache.driver']) {
+            switch ($potential_driver) {
                 case 'file':
                     // the only possible thing to show when file is used
                     // is the configuration options
@@ -137,7 +146,7 @@ return
                                 $res = 'memcached wordt niet uitgevoerd';
                                 break;
                             default: /* EN */
-                                $res = 'memcached not running?! ';
+                                $res = 'memcached not running?!';
                         }
                     }
                     break;
