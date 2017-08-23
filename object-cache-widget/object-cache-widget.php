@@ -135,7 +135,7 @@ return
                         }
                     } else {
                         // if stats cannot be read, the daemon isn't running
-                        switch (panel()->user->language()) {
+                        switch (panel()->user()->language()) {
                             case 'de':
                                 $res = 'memcached läuft nicht';
                                 break;
