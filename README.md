@@ -148,3 +148,7 @@ David Somers - [@omz13](https://twitter.com/omz13)
 
 ### 0.1
 - Initial release
+
+### 0.2
+- Fixes #1
+- If a cache is specified, but not enabled for the current user, will now show the cache details (instead of before where it just said no cache). There is a very subtle asterisk after the cache driver name to indicate its available but not for the current user.
