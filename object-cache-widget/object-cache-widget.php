@@ -34,7 +34,7 @@ if (!c::get('cache.driver') && !c::get('cache')) {
 }
 
 // get the active driver
-$driver = kirby()->options['cache.driver'];
+$driver = get_class(kirby()->cache); // kirby()->options['cache.driver'];
 
 if ($driver != $potential_driver)
     $title = 'object cache (' . $potential_driver . '*)';
@@ -86,7 +86,7 @@ return
         'compressed' => true,
         'options' => $options,
         'html' => function () {
-            switch ($potential_driver) {
+            switch (c::get('cache.driver')) {
                 case 'file':
                     // the only possible thing to show when file is used
                     // is the configuration options
@@ -135,7 +135,7 @@ return
                         }
                     } else {
                         // if stats cannot be read, the daemon isn't running
-                        switch (panel()->user->language()) {
+                        switch (panel()->user()->language()) {
                             case 'de':
                                 $res = 'memcached läuft nicht';
                                 break;

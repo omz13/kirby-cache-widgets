@@ -152,3 +152,7 @@ David Somers - [@omz13](https://twitter.com/omz13)
 ### 0.2
 - Fixes #1
 - If a cache is specified, but not enabled for the current user, will now show the cache details (instead of before where it just said no cache). There is a very subtle asterisk after the cache driver name to indicate its available but not for the current user.
+
+### 0.3
+- Tweak things so the diagnostics widget, if required, is shown before any of the other widgets.
+- Fixes. Because, of course, things went terribly wrong with 0.2. This time it should work.
