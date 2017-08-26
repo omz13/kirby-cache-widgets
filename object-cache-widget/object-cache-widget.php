@@ -6,7 +6,7 @@ use c;
 use tpl;
 
 // is the cache enabled in the kirby config?
-$potential_driver = c::get('cache.driver');
+$potential_driver = strtolower(c::get('cache.driver'));
 $potential_enabled = c::get('cache');
 
 if (!c::get('cache.driver') && !c::get('cache')) {
@@ -33,9 +33,10 @@ if (!c::get('cache.driver') && !c::get('cache')) {
     );
 }
 
-// get the active driver
-$driver = get_class(kirby()->cache); // kirby()->options['cache.driver'];
+// get the active driver (by stripping current class name e.g. ' Cache\Driver\Memcached to 'memcached')
+$driver = strtolower(substr(strrchr(get_class(kirby()->cache), "\\"), 1));
 
+// is the name of the active driver different from that in the config?
 if ($driver != $potential_driver)
     $title = 'object cache (' . $potential_driver . '*)';
     // note the asterisk to indicate the specified driver has been switched off
