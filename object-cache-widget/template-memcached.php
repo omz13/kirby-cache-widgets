@@ -25,6 +25,6 @@ else
 
 	<li>Get Hits: <span class="marginalia"><?=$stats['get_hits']?></span></li>
 	<li>Get Misses: <span class="marginalia"><?=$stats['get_misses']?></span></li>
-	<li style="margin-bottom: 3px;">Effectiveness: <span class="marginalia"><?php echo number_format(100*$stats['get_hits']/($stats['get_hits']+$stats['get_misses']),2) . '%'; ?></span></li>
+	<li style="margin-bottom: 3px;">Effectiveness: <span class="marginalia"><?php if ($stats['get_hits']+$stats['get_misses']) { echo number_format(100*$stats['get_hits']/($stats['get_hits']+$stats['get_misses']),2) . '%'; } else { echo 'n/a'; } ?></span></li>
 </ul>
 <?php } ?>
