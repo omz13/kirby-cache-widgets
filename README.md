@@ -1,5 +1,5 @@
 # Kirby Cache Widgets
-![Version](https://img.shields.io/badge/version-0.1-green.svg)
+![Version](https://img.shields.io/badge/version-0.4-green.svg)
 ![License](https://img.shields.io/badge/license-MIT-green.svg)
 ![Kirby Version](https://img.shields.io/badge/Kirby-2.4.1%2B-red.svg)
 [![Issues](https://img.shields.io/github/issues/omz13/kirby-cache-widget.svg)](https://github.com/omz13/kirby-cache-widgets/issues)
@@ -135,7 +135,7 @@ If you find any bugs, have troubles or ideas, etc., please let me know [by openi
 
 ## Requirements
 
-Kirby 2.4.1
+Kirby 2.4.1+
 
 ## License
 [MIT License](http://www.opensource.org/licenses/mit-license.php)
@@ -156,3 +156,7 @@ David Somers - [@omz13](https://twitter.com/omz13)
 ### 0.3
 - Tweak things so the diagnostics widget, if required, is shown before any of the other widgets.
 - Fixes. Because, of course, things went terribly wrong with 0.2. This time it should work.
+
+### 0.4
+- Better detection of when the object cache is configured but not enabled (i.e. better checking of class name of what is used against what is configured). Be amazed at the clunky chain of string operations involved in extracting the tail of the classname. There is probably a far cleaner way of doing this, but this works.
+- Fix divide by zero (would sometimes happen if object cache was reset)
